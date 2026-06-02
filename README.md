@@ -1,5 +1,18 @@
 # mobile-pingstats
 
+`mobile-pingstats` je jednotný, multiplatformový nástroj na meranie odozvy siete
+a zbieranie ping štatistík na mobilných zariadeniach.
+
+Podporované platformy:
+
+- **iOS (iSH / Alpine Linux)**
+- **Android (Termux)**
+
+Cieľom projektu je poskytovať rovnaké správanie, rovnaké logy a rovnaké CLI
+rozhranie na oboch platformách, s minimálnou údržbou zdrojového kódu.
+
+---
+
 ## Badges
 
 ![License](https://img.shields.io/badge/License-EUPL_1.2-blue)
@@ -15,20 +28,6 @@
 ![Forks](https://img.shields.io/github/forks/martinkusnierik/mobile-pingstats?style=social)
 
 ![Shell](https://img.shields.io/badge/Shell-Bash-121011?logo=gnu-bash&logoColor=white)
-
-
-`mobile-pingstats` je jednotný, multiplatformový nástroj na meranie odozvy siete
-a zbieranie ping štatistík na mobilných zariadeniach.
-
-Podporované platformy:
-
-- **iOS (iSH / Alpine Linux)**
-- **Android (Termux)**
-
-Cieľom projektu je poskytovať rovnaké správanie, rovnaké logy a rovnaké CLI
-rozhranie na oboch platformách, s minimálnou údržbou zdrojového kódu.
-
----
 
 ## ✨ Funkcie
 
