@@ -1,15 +1,21 @@
 # mobile-pingstats
 
 ## Badges
+
 ![License](https://img.shields.io/badge/License-EUPL_1.2-blue)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 ![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Android-lightgrey)
 
-![Repo Size](https://img.shields.io/github/repo-size/martinkusnierik/mobile-pingstats)
-![Last Commit](https://img.shields.io/github/last-commit/martinkusnierik/mobile-pingstats)
-![Issues](https://img.shields.io/github/issues/martinkusnierik/mobile-pingstats)
+![Repo Size](https://img.shields.io/github/repo-size/martinkusnierik/mobile-pingstats?color=blue)
+![Last Commit](https://img.shields.io/github/last-commit/martinkusnierik/mobile-pingstats?logo=github&color=blue)
+![Issues](https://img.shields.io/github/issues/martinkusnierik/mobile-pingstats?color=green)
+![Pull Requests](https://img.shields.io/github/issues-pr/martinkusnierik/mobile-pingstats?color=orange)
+
+![Stars](https://img.shields.io/github/stars/martinkusnierik/mobile-pingstats?style=social)
+![Forks](https://img.shields.io/github/forks/martinkusnierik/mobile-pingstats?style=social)
 
 ![Shell](https://img.shields.io/badge/Shell-Bash-121011?logo=gnu-bash&logoColor=white)
+
 
 `mobile-pingstats` je jednotný, multiplatformový nástroj na meranie odozvy siete
 a zbieranie ping štatistík na mobilných zariadeniach.
