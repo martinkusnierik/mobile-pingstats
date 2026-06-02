@@ -1,4 +1,5 @@
 #!/bin/sh
 pkg update -y
-pkg install -y iputils
+pkg upgrade -y
+pkg install -y inetutils
 echo "Termux dependencies installed."
