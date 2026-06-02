@@ -1,0 +1,2 @@
+platform/termux/*.sh text eol=lf
+bin/pingstats text eol=lf
