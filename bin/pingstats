@@ -1,0 +1,22 @@
+#!/bin/sh
+
+BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+if [ -d /data/data/com.termux ]; then
+    PLATFORM="termux"
+elif [ -f /etc/os-release ] && grep -qi "alpine" /etc/os-release; then
+    PLATFORM="ish"
+else
+    echo "Unknown platform (not Termux, not Alpine/iSH)"
+    exit 1
+fi
+
+PING_ADAPTER="$BASE_DIR/platform/$PLATFORM/ping_adapter.sh"
+
+if [ ! -f "$PING_ADAPTER" ]; then
+    echo "Missing adapter: $PING_ADAPTER"
+    exit 1
+fi
+
+cd "$BASE_DIR" || exit 1
+. "$BASE_DIR/scripts/pingstats_core.sh"
