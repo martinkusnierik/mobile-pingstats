@@ -10,18 +10,17 @@ MIN=""
 MAX=""
 
 # -----------------------------
-#  Histogram buckets
-#  (same as in ish-scripts)
+#  Histogram buckets (mobile-optimized)
 # -----------------------------
-# 1: 0–25
-# 2: 26–49
-# 3: 50–99
-# 4: 100–199
-# 5: 200–399
-# 6: 400–799
-# 7: 800–1599
-# 8: 1600–3199
-# 9: 3200–6399
+# 1: 0–19 ms     → výborné LTE / 5G SA
+# 2: 20–39 ms    → dobré LTE / 5G NSA
+# 3: 40–59 ms    → priemerné LTE
+# 4: 60–79 ms    → slabšie LTE / preťaženie
+# 5: 80–119 ms   → 3G / veľmi slabé LTE
+# 6: 120–199 ms  → 3G typické
+# 7: 200–399 ms  → 3G slabé / EDGE rýchle
+# 8: 400–799 ms  → EDGE
+# 9: 800–1599 ms → EDGE / extrémne straty
 # 10: timeout
 BUCKETS="0 0 0 0 0 0 0 0 0 0"
 
@@ -36,15 +35,15 @@ stats_add() {
         ''|*[!0-9]*)
             IDX=10 ;;  # timeout
         *)
-            if   [ "$VAL" -le 25 ]; then IDX=1
-            elif [ "$VAL" -le 49 ]; then IDX=2
-            elif [ "$VAL" -le 99 ]; then IDX=3
-            elif [ "$VAL" -le 199 ]; then IDX=4
-            elif [ "$VAL" -le 399 ]; then IDX=5
-            elif [ "$VAL" -le 799 ]; then IDX=6
-            elif [ "$VAL" -le 1599 ]; then IDX=7
-            elif [ "$VAL" -le 3199 ]; then IDX=8
-            elif [ "$VAL" -le 6399 ]; then IDX=9
+            if   [ "$VAL" -le 19 ]; then IDX=1
+            elif [ "$VAL" -le 39 ]; then IDX=2
+            elif [ "$VAL" -le 59 ]; then IDX=3
+            elif [ "$VAL" -le 79 ]; then IDX=4
+            elif [ "$VAL" -le 119 ]; then IDX=5
+            elif [ "$VAL" -le 199 ]; then IDX=6
+            elif [ "$VAL" -le 399 ]; then IDX=7
+            elif [ "$VAL" -le 799 ]; then IDX=8
+            elif [ "$VAL" -le 1599 ]; then IDX=9
             else IDX=10
             fi
             ;;
@@ -81,7 +80,7 @@ stats_print_histogram() {
     echo ""
     echo "Latency histogram (ms)"
 
-    LABELS="0-25 26-49 50-99 100-199 200-399 400-799 800-1599 1600-3199 3200-6399 timeout"
+    LABELS="0-19 20-39 40-59 60-79 80-119 120-199 200-399 400-799 800-1599 timeout"
     MAX_BUCKET=$(echo "$BUCKETS" | tr ' ' '\n' | sort -nr | head -1)
 
     I=1
