@@ -90,7 +90,7 @@ stats_print_histogram() {
 
         BAR=$(printf "%${BAR_LEN}s" | tr ' ' '#')
 
-        printf "%s%-10s | %-20s | %s%s\n" \
+        printf "%s%-10s| %-20s | %s%s\n" \
             "$COLOR" "$LABEL" "$BAR" "$DESC" "$C_RESET"
     }
 
