@@ -61,9 +61,9 @@ stats_print_histogram() {
     echo ""
     echo "Latency histogram (ms)"
 
-    LABELS="0-19 20-39 40-59 60-79 80-119 120-199 200-399 400-799 800-1599 1600-2999 timeout"
-    DESCR="výborné dobré priemerné slabé veľmi_slabé 3G_typické 3G_slabé EDGE extrémne zlé timeout"
-    COLORS="$C_GREEN $C_GREEN $C_YELLOW $C_YELLOW $C_RED $C_RED $C_RED $C_RED $C_RED $C_RED $C_GRAY"
+    LABELS="0-19      20-39      40-59      60-79      80-119     120-199    200-399    400-799    800-1599   1600-2999  timeout   "
+    DESCR="4G_vyborne 4G_dobre   4G_priemerne 4G_slabe   4G_velmi_slabe 4G_extremne 2G_rychle 2G_pomalé 2G_velmi_pomalé 2G_extremne timeout"
+    COLORS="$C_GREEN   $C_GREEN   $C_YELLOW    $C_YELLOW  $C_RED         $C_RED       $C_RED     $C_RED     $C_RED        $C_RED      $C_GRAY"
 
     MAX_BUCKET=$(echo "$BUCKETS" | tr ' ' '\n' | sort -nr | head -1)
 
@@ -81,7 +81,7 @@ stats_print_histogram() {
 
         BAR=$(printf "%${BAR_LEN}s" | tr ' ' '#')
 
-        printf "%s%-8s%s | %s%-20s%s | %s\n" \
+        printf "%s%-10s%s | %s%-20s%s | %s\n" \
             "$COLOR" "$L" "$C_RESET" \
             "$COLOR" "$BAR" "$C_RESET" \
             "$TEXT"
@@ -89,6 +89,7 @@ stats_print_histogram() {
         I=$((I+1))
     done
 }
+
 
 stats_print() {
     echo ""
