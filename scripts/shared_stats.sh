@@ -12,15 +12,15 @@ MAX=""
 # -----------------------------
 #  Histogram buckets (mobile-optimized)
 # -----------------------------
-# 1: 0–19 ms     → výborné LTE / 5G SA
-# 2: 20–39 ms    → dobré LTE / 5G NSA
-# 3: 40–59 ms    → priemerné LTE
-# 4: 60–79 ms    → slabšie LTE
-# 5: 80–119 ms   → veľmi slabé LTE / 3G
-# 6: 120–199 ms  → 3G typické
-# 7: 200–399 ms  → 3G slabé / EDGE rýchle
-# 8: 400–799 ms  → EDGE
-# 9: 800–1599 ms → EDGE / extrémne
+# 1: 0–19 ms       → výborné LTE / 5G SA
+# 2: 20–39 ms      → dobré LTE / 5G NSA
+# 3: 40–59 ms      → priemerné LTE
+# 4: 60–79 ms      → slabé LTE
+# 5: 80–119 ms     → veľmi slabé LTE / 3G
+# 6: 120–199 ms    → 3G typické
+# 7: 200–399 ms    → 3G slabé / EDGE rýchle
+# 8: 400–799 ms    → EDGE
+# 9: 800–1599 ms   → EDGE / extrémne
 # 10: 1600–2999 ms → veľmi zlé / satelit
 # 11: timeout
 BUCKETS="0 0 0 0 0 0 0 0 0 0 0"
@@ -40,7 +40,6 @@ C_GRAY="\033[90m"
 stats_add() {
     VAL="$1"
 
-    # Determine bucket index
     case "$VAL" in
         ''|*[!0-9]*)
             IDX=11 ;;  # timeout
@@ -60,7 +59,6 @@ stats_add() {
             ;;
     esac
 
-    # Update OK/timeout counters
     if [ "$IDX" -eq 11 ]; then
         COUNT_TIMEOUT=$((COUNT_TIMEOUT + 1))
     else
@@ -71,7 +69,6 @@ stats_add() {
         [ -z "$MAX" ] || [ "$VAL" -gt "$MAX" ] && MAX="$VAL"
     fi
 
-    # Update bucket count
     OLD=$(echo "$BUCKETS" | cut -d' ' -f$IDX)
     NEW=$((OLD + 1))
 
@@ -92,41 +89,16 @@ stats_print_histogram() {
     echo "Latency histogram (ms)"
 
     LABELS="0-19 20-39 40-59 60-79 80-119 120-199 200-399 400-799 800-1599 1600-2999 timeout"
-    DESCR=(
-        "výborné LTE/5G"
-        "dobré LTE"
-        "priemerné LTE"
-        "slabé LTE"
-        "veľmi slabé LTE/3G"
-        "3G typické"
-        "3G slabé/EDGE"
-        "EDGE"
-        "extrémne"
-        "veľmi zlé/satelit"
-        "timeout"
-    )
-
-    COLORS=(
-        "$C_GREEN"
-        "$C_GREEN"
-        "$C_YELLOW"
-        "$C_YELLOW"
-        "$C_RED"
-        "$C_RED"
-        "$C_RED"
-        "$C_RED"
-        "$C_RED"
-        "$C_RED"
-        "$C_GRAY"
-    )
+    DESCR="výborné_LTE/5G dobré_LTE priemerné_LTE slabé_LTE veľmi_slabé_LTE/3G 3G_typické 3G_slabé/EDGE EDGE extrémne veľmi_zlé/satelit timeout"
+    COLORS="$C_GREEN $C_GREEN $C_YELLOW $C_YELLOW $C_RED $C_RED $C_RED $C_RED $C_RED $C_RED $C_GRAY"
 
     MAX_BUCKET=$(echo "$BUCKETS" | tr ' ' '\n' | sort -nr | head -1)
 
     I=1
     for L in $LABELS; do
         COUNT=$(echo "$BUCKETS" | cut -d' ' -f$I)
-        COLOR=${COLORS[$((I-1))]}
-        TEXT=${DESCR[$((I-1))]}
+        COLOR=$(echo "$COLORS" | cut -d' ' -f$I)
+        TEXT=$(echo "$DESCR" | cut -d' ' -f$I | tr '_' ' ')
 
         if [ "$MAX_BUCKET" -gt 0 ]; then
             BAR_LEN=$((COUNT * 30 / MAX_BUCKET))
