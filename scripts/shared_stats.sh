@@ -61,17 +61,26 @@ stats_print_histogram() {
     echo ""
     echo "Latency histogram (ms)"
 
-    LABELS="0-19      20-39      40-59      60-79      80-119     120-199    200-399    400-799    800-1599   1600-2999  timeout   "
-    DESCR="4G_vyborne 4G_dobre   4G_priemerne 4G_slabe   4G_velmi_slabe 4G_extremne 2G_rychle 2G_pomale 2G_velmi_pomale 2G_extremne timeout"
-    COLORS="$C_GREEN   $C_GREEN   $C_YELLOW    $C_YELLOW  $C_RED         $C_RED       $C_RED     $C_RED     $C_RED        $C_RED      $C_GRAY"
+    # Labels (pevná šírka 10 znakov)
+    L1="0-19     ";   D1="4G výborné";        C1=$C_GREEN
+    L2="20-39    ";   D2="4G dobré";          C2=$C_GREEN
+    L3="40-59    ";   D3="4G priemerné";      C3=$C_YELLOW
+    L4="60-79    ";   D4="4G slabé";          C4=$C_YELLOW
+    L5="80-119   ";   D5="4G veľmi slabé";    C5=$C_RED
+    L6="120-199  ";   D6="4G zahltené";       C6=$C_RED
+    L7="200-399  ";   D7="2G rýchle";         C7=$C_RED
+    L8="400-799  ";   D8="2G pomalé";         C8=$C_RED
+    L9="800-1599 ";   D9="2G veľmi pomalé";   C9=$C_RED
+    L10="1600-2999";  D10="2G extrémne";      C10=$C_RED
+    L11="timeout ";   D11="timeout";          C11=$C_GRAY
 
     MAX_BUCKET=$(echo "$BUCKETS" | tr ' ' '\n' | sort -nr | head -1)
 
-    I=1
-    for L in $LABELS; do
-        COUNT=$(echo "$BUCKETS" | cut -d' ' -f$I)
-        COLOR=$(echo "$COLORS" | cut -d' ' -f$I)
-        TEXT=$(echo "$DESCR" | cut -d' ' -f$I | tr '_' ' ')
+    print_row() {
+        LABEL="$1"
+        COUNT="$2"
+        COLOR="$3"
+        DESC="$4"
 
         if [ "$MAX_BUCKET" -gt 0 ]; then
             BAR_LEN=$((COUNT * 20 / MAX_BUCKET))
@@ -82,10 +91,20 @@ stats_print_histogram() {
         BAR=$(printf "%${BAR_LEN}s" | tr ' ' '#')
 
         printf "%s%-10s | %-20s | %s%s\n" \
-            "$COLOR" "$L" "$BAR" "$TEXT" "$C_RESET"
+            "$COLOR" "$LABEL" "$BAR" "$DESC" "$C_RESET"
+    }
 
-        I=$((I+1))
-    done
+    print_row "$L1"  "$(echo "$BUCKETS" | cut -d' ' -f1)"  "$C1"  "$D1"
+    print_row "$L2"  "$(echo "$BUCKETS" | cut -d' ' -f2)"  "$C2"  "$D2"
+    print_row "$L3"  "$(echo "$BUCKETS" | cut -d' ' -f3)"  "$C3"  "$D3"
+    print_row "$L4"  "$(echo "$BUCKETS" | cut -d' ' -f4)"  "$C4"  "$D4"
+    print_row "$L5"  "$(echo "$BUCKETS" | cut -d' ' -f5)"  "$C5"  "$D5"
+    print_row "$L6"  "$(echo "$BUCKETS" | cut -d' ' -f6)"  "$C6"  "$D6"
+    print_row "$L7"  "$(echo "$BUCKETS" | cut -d' ' -f7)"  "$C7"  "$D7"
+    print_row "$L8"  "$(echo "$BUCKETS" | cut -d' ' -f8)"  "$C8"  "$D8"
+    print_row "$L9"  "$(echo "$BUCKETS" | cut -d' ' -f9)"  "$C9"  "$D9"
+    print_row "$L10" "$(echo "$BUCKETS" | cut -d' ' -f10)" "$C10" "$D10"
+    print_row "$L11" "$(echo "$BUCKETS" | cut -d' ' -f11)" "$C11" "$D11"
 }
 
 
