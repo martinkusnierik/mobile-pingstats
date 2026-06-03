@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. "$(dirname "$0")/shared_stats.sh"   # musí byť prvé!
+. "$BASE_DIR/scripts/shared_stats.sh"   # musí byť prvé!
 . "$PING_ADAPTER"                    # nastaví ho wrapper
 
 CONFIG_FILE="./ping.conf"
